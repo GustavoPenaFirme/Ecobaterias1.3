@@ -1,9 +1,47 @@
-Ir para o conteúdo
-EcoBateria
-Início {% if current_user.is_authenticated %} Pontos de Coleta Meu painel {% if current_user.is_admin() %} Admin {% endif %} Olá, {{ current_user.nome.split()[0] }} Sair {% else %} Entrar Cadastrar {% endif %}
-{% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
-{% for category, message in messages %}
-{{ message }}
-{% endfor %}
-{% endif %} {% endwith %} {% block content %}{% endblock %}
-EcoBateria — UNIVESP · Projeto Integrador · 2026
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}EcoBateria{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('main.index') }}">EcoBateria</a>
+    <nav aria-label="Principal">
+      <a href="{{ url_for('main.index') }}">Início</a>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.mapa') }}">Pontos de Coleta</a>
+        <a href="{{ url_for('main.painel') }}">Meu painel</a>
+        {% if current_user.is_admin() %}
+          <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+        {% endif %}
+        <span class="user-label">Olá, {{ current_user.nome.split()[0] }}</span>
+        <a class="btn btn-ghost" href="{{ url_for('auth.logout') }}">Sair</a>
+      {% else %}
+        <a class="btn btn-ghost" href="{{ url_for('auth.login') }}">Entrar</a>
+        <a class="btn btn-primary" href="{{ url_for('auth.cadastro') }}">Cadastrar</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main id="conteudo-principal" class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes" role="status">
+          {% for category, message in messages %}
+            <li class="flash flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>EcoBateria — UNIVESP · Projeto Integrador · 2026</p>
+  </footer>
+</body>
+</html>
