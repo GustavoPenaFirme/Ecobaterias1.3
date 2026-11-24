@@ -1,20 +1,63 @@
-{% extends "base.html" %} {% block title %}AdministraÃ§Ã£o â€” EcoBateria{% endblock %} {% block content %}
-Painel administrativo
+{% extends "base.html" %}
+{% block title %}Administração — EcoBateria{% endblock %}
+{% block content %}
+<h1>Painel administrativo</h1>
 
-{{ pontos_ativos }}Pontos ativos
-{{ total_arrec }}ArrecadaÃ§Ãµes
-{{ volume }} kgTotal coletado
-{{ pendentes }}Retiradas pendentes
-SolicitaÃ§Ãµes de retirada
+<section class="stats" aria-label="Indicadores">
+  <div class="stat-card"><strong>{{ pontos_ativos }}</strong><span>Pontos ativos</span></div>
+  <div class="stat-card"><strong>{{ total_arrec }}</strong><span>Arrecadações</span></div>
+  <div class="stat-card"><strong>{{ volume }} kg</strong><span>Total coletado</span></div>
+  <div class="stat-card"><strong>{{ pendentes }}</strong><span>Retiradas pendentes</span></div>
+</section>
 
-{% if solicitacoes %} {% for s in solicitacoes %} {% endfor %}
-ID	Ponto	Volume	Data	Status	AÃ§Ã£o
-#{{ s.id }}	{{ s.ponto.nome if s.ponto else 'â€”' }}	{{ s.volume_kg }} kg	{{ s.data_solicitacao.strftime('%d/%m/%Y') }}	{{ s.status }}	{% if s.status == 'Pendente' %} Aprovar {% else %}â€”{% endif %}
-{% else %}
-Nenhuma solicitaÃ§Ã£o no momento.
+<section class="panel">
+  <h2>Solicitações de retirada</h2>
+  {% if solicitacoes %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ponto</th>
+          <th>Volume</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in solicitacoes %}
+          <tr>
+            <td>#{{ s.id }}</td>
+            <td>{{ s.ponto.nome if s.ponto else '—' }}</td>
+            <td>{{ s.volume_kg }} kg</td>
+            <td>{{ s.data_solicitacao.strftime('%d/%m/%Y') }}</td>
+            <td>{{ s.status }}</td>
+            <td>
+              {% if s.status == 'Pendente' %}
+                <form method="post" action="{{ url_for('admin.aprovar', sid=s.id) }}" style="display:inline">
+                  <button type="submit" class="btn btn-primary btn-sm">Aprovar</button>
+                </form>
+              {% else %}—{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">Nenhuma solicitação no momento.</p>
+  {% endif %}
+</section>
 
-{% endif %}
-Novo ponto de coleta
-
-Nome   EndereÃ§o   Cidade   Cadastrar ponto
+<section class="panel">
+  <h2>Novo ponto de coleta</h2>
+  <form method="post" action="{{ url_for('admin.novo_ponto') }}" class="form-inline">
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" name="nome" required>
+    <label for="endereco">Endereço</label>
+    <input type="text" id="endereco" name="endereco" required>
+    <label for="cidade">Cidade</label>
+    <input type="text" id="cidade" name="cidade" value="Brasília">
+    <button type="submit" class="btn btn-primary">Cadastrar ponto</button>
+  </form>
+</section>
 {% endblock %}
