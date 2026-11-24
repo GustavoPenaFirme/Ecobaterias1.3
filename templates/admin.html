@@ -1,1 +1,20 @@
+{% extends "base.html" %} {% block title %}AdministraÃ§Ã£o â€” EcoBateria{% endblock %} {% block content %}
+Painel administrativo
 
+{{ pontos_ativos }}Pontos ativos
+{{ total_arrec }}ArrecadaÃ§Ãµes
+{{ volume }} kgTotal coletado
+{{ pendentes }}Retiradas pendentes
+SolicitaÃ§Ãµes de retirada
+
+{% if solicitacoes %} {% for s in solicitacoes %} {% endfor %}
+ID	Ponto	Volume	Data	Status	AÃ§Ã£o
+#{{ s.id }}	{{ s.ponto.nome if s.ponto else 'â€”' }}	{{ s.volume_kg }} kg	{{ s.data_solicitacao.strftime('%d/%m/%Y') }}	{{ s.status }}	{% if s.status == 'Pendente' %} Aprovar {% else %}â€”{% endif %}
+{% else %}
+Nenhuma solicitaÃ§Ã£o no momento.
+
+{% endif %}
+Novo ponto de coleta
+
+Nome   EndereÃ§o   Cidade   Cadastrar ponto
+{% endblock %}
