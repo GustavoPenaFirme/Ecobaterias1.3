@@ -1,1 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Entrar — EcoBateria{% endblock %}
+{% block content %}
+<section class="auth-box">
+  <h1>Entrar no sistema</h1>
+  <p class="muted">Acesse sua conta para gerenciar pontos e arrecadações.</p>
+  <form method="post" action="{{ url_for('auth.login') }}" novalidate>
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required autocomplete="username"
+           placeholder="seu@email.com" value="{{ request.form.email or '' }}">
 
+    <label for="password">Senha</label>
+    <input type="password" id="password" name="password" required autocomplete="current-password"
+           placeholder="••••••••">
+
+    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+  </form>
+  <p class="muted center">Não tem conta? <a href="{{ url_for('auth.cadastro') }}">Cadastre-se</a></p>
+  <p class="hint">Demo: <code>pena.gustavo@gmail.com</code> / <code>senha123</code> · Admin: <code>admin@ecobateria.app</code> / <code>admin123</code></p>
+</section>
+{% endblock %}
