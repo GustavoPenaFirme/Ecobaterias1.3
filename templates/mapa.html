@@ -1,1 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Pontos de coleta — EcoBateria{% endblock %}
+{% block content %}
+<h1>Pontos de coleta</h1>
+<p class="muted">Locais cadastrados para descarte de pilhas e baterias.</p>
 
+<section class="pontos-grid" aria-label="Lista de pontos">
+  {% for p in pontos %}
+    <article class="ponto-card">
+      <h2>{{ p.nome }}</h2>
+      <p>{{ p.endereco }}</p>
+      <p class="muted">{{ p.cidade }}/{{ p.uf }}</p>
+      <span class="badge {% if p.status == 'Aberto' %}badge-ok{% else %}badge-off{% endif %}">
+        {{ p.status }}
+      </span>
+    </article>
+  {% else %}
+    <p class="muted">Nenhum ponto cadastrado.</p>
+  {% endfor %}
+</section>
+{% endblock %}
