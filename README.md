@@ -5,7 +5,7 @@ Sistema web acessível para gestão e mapeamento de pontos de coleta de pilhas e
 **Projeto Integrador em Computação II — UNIVESP (2026)**
 
 Grupo: Gustavo da Silva Pena Firme, Thiago Moura, Lucas Vieira, Eric Amadeu de Lima  
-Orientador: Felipe Santana
+Orientador: Monize Luiz Santos
 
 ## Funcionalidades
 
