@@ -1,1 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Meu painel — EcoBateria{% endblock %}
+{% block content %}
+<h1>Meu painel</h1>
+<p class="muted">Registre arrecadações e acompanhe o histórico de coletas.</p>
 
+<section class="stats" aria-label="Resumo">
+  <div class="stat-card">
+    <strong>{{ qtd }}</strong>
+    <span>Arrecadações</span>
+  </div>
+  <div class="stat-card">
+    <strong>{{ total_kg }} kg</strong>
+    <span>Volume total</span>
+  </div>
+  <div class="stat-card">
+    <strong>{{ pontos|length }}</strong>
+    <span>Pontos cadastrados</span>
+  </div>
+</section>
+
+<div class="grid-2">
+  <section class="panel">
+    <h2>Nova arrecadação</h2>
+    <form method="post" action="{{ url_for('main.nova_arrecadacao') }}">
+      <label for="tipo_material">Tipo de material</label>
+      <select id="tipo_material" name="tipo_material" required>
+        <option value="">Selecione...</option>
+        <option>Pilhas alcalinas / comuns</option>
+        <option>Baterias de lítio (notebook/celular)</option>
+        <option>Baterias de rádio / equipamento</option>
+        <option>Pilhas AA/AAA</option>
+        <option>Outros</option>
+      </select>
+
+      <label for="peso_kg">Quantidade / peso (kg)</label>
+      <input type="number" step="0.1" min="0.1" id="peso_kg" name="peso_kg" required placeholder="1.5">
+
+      <label for="regiao">Ponto / região</label>
+      <input type="text" id="regiao"
