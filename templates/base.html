@@ -1,1 +1,9 @@
-
+Ir para o conteúdo
+EcoBateria
+Início {% if current_user.is_authenticated %} Pontos de Coleta Meu painel {% if current_user.is_admin() %} Admin {% endif %} Olá, {{ current_user.nome.split()[0] }} Sair {% else %} Entrar Cadastrar {% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+{% for category, message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %} {% endwith %} {% block content %}{% endblock %}
+EcoBateria — UNIVESP · Projeto Integrador · 2026
