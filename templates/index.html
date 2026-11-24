@@ -1,1 +1,32 @@
+{% extends "base.html" %}
+{% block title %}EcoBateria — Início{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Descarte consciente<br><span class="accent">de pilhas e baterias</span></h1>
+  <p>Encontre pontos de coleta próximos, registre arrecadações e acompanhe a logística reversa de forma acessível e organizada.</p>
+  <div class="hero-actions">
+    {% if current_user.is_authenticated %}
+      <a class="btn btn-primary" href="{{ url_for('main.mapa') }}">Ver mapa de coleta</a>
+      <a class="btn btn-ghost" href="{{ url_for('main.painel') }}">Meu painel</a>
+    {% else %}
+      <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Entrar no sistema</a>
+      <a class="btn btn-ghost" href="{{ url_for('auth.cadastro') }}">Criar conta</a>
+    {% endif %}
+  </div>
+</section>
 
+<section class="cards" aria-label="Funcionalidades">
+  <article class="card">
+    <h2>Mapa interativo</h2>
+    <p>Localize pontos de coleta próximos a você.</p>
+  </article>
+  <article class="card">
+    <h2>Registro de arrecadação</h2>
+    <p>Controle volumes e materiais recolhidos.</p>
+  </article>
+  <article class="card">
+    <h2>Acessível (WCAG)</h2>
+    <p>Interface pensada para todos os usuários.</p>
+  </article>
+</section>
+{% endblock %}
